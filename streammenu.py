@@ -33,16 +33,16 @@ from sklearn.linear_model import LinearRegression
 
 filename = "D:\\lw classes\\lw_streamlit_pr\\data.csv"  # replaced your file
 
-sid, token, number, YourNumber,YourEmail,GenApi = None, None, None, None,None,None
-with open(filename, mode='r') as file:
-    reader = csv.DictReader(file)  # Uses header row automatically
-    for row in reader:
-        sid = row['sid']
-        token = row['token']
-        number = row['number']
-        YourNumber = row['YourNumber']
-        YourEmail = row['YourEmail']
-        GenApi = row['GenApi']
+# sid, token, number, YourNumber,YourEmail,GenApi = None, None, None, None,None,None
+# with open(filename, mode='r') as file:
+#     reader = csv.DictReader(file)  # Uses header row automatically
+#     for row in reader:
+#         sid = row['sid']
+#         token = row['token']
+#         number = row['number']
+#         YourNumber = row['YourNumber']
+#         YourEmail = row['YourEmail']
+#         GenApi = row['GenApi']
 
 # class AllFunction():
     # def ReadRam():
@@ -121,7 +121,7 @@ def CreateImg():
     return image
 
 # 5. Send SMS via Twilio
-def send_sms():
+def send_sms(sid, token, number, YourNumber):
     account_sid = sid
     auth_token = token
     twilio_number = number
@@ -135,7 +135,7 @@ def send_sms():
     return message.sid
 
 # 6. Make Call via Twilio
-def Mak_Call():
+def Make_Call(sid, token, number, YourNumber):
     account_sid = sid
     auth_token = token
     twilio_number = number
@@ -504,7 +504,7 @@ def dockerfile_menu():
         st.markdown(f"### {cmd_choice}")
         st.write(commands[cmd_choice])
 
-def Automation_genai():
+def Automation_genai(GenApi,user_input):
 
 
     import google.generativeai as genai
@@ -530,7 +530,7 @@ def Automation_genai():
         ]
     
     # User input
-    user_input = st.text_input("Ask me anything about careers in AI or related fields:")
+    
     
     if user_input:
         # Append user message to history
@@ -673,8 +673,13 @@ if p.__contains__("About Me"):
 elif p.__contains__("Project1"):
     app_mode = st.sidebar.radio("Choose your function:",
                                   ("Automation Function","About GenAi"))
+    
     if app_mode.__contains__("Automation Function"):
-        Automation_genai()
+        GenApi = st.text_input("Enter Your GenAI API Key:")
+        user_input = st.text_input("Ask me anything about careers in AI or related fields:")
+        if st.button("Submit"):
+            
+            Automation_genai(GenApi,user_input)
     elif app_mode.__contains__("About GenAi"):
         import streamlit as st
 
@@ -1000,18 +1005,26 @@ elif p.__contains__("Project5"):
         
         elif choice == "5. Send SMS (Twilio)":
             st.subheader("Send SMS via Twilio")
+            sid = st.text_input("Enter Twiolio SID")
+            token = st.text_input("Enter Twiolio Token")
+            from_number = st.text_input("Enter From Number")
+            to_number = st.text_input("Enter your Number")
             if st.button("Send SMS"):
                 try:
-                    sid = send_sms()
+                    sid = send_sms(sid, token, from_number, to_number)
                     st.success(f"SMS sent! SID: {sid}")
                 except Exception as e:
                     st.error(f"Error: {e}")
         
         elif choice == "6. Make Phone Call (Twilio)":
             st.subheader("Make Phone Call via Twilio")
+            sid = st.text_input("Enter Twiolio SID")
+            token = st.text_input("Enter Twiolio Token")
+            from_number = st.text_input("Enter From Number")
+            to_number = st.text_input("Enter your Number")
             if st.button("Make Call"):
                 try:
-                    result = Mak_Call()
+                    result = Make_Call(sid, token, from_number, to_number)
                     st.success(result)
                 except Exception as e:
                     st.error(f"Error: {e}")
@@ -1352,7 +1365,8 @@ elif p.__contains__("Project5"):
     
     elif r.__contains__("GenAi"):
         import google.generativeai as genai
-        
+        import streamlit as st
+        GenApi = st.text_input("Enter GenApi")        
         # ✅ Set your Gemini API key here securely
         genai.configure(api_key=GenApi)  # ← Your key
         
@@ -1432,14 +1446,14 @@ elif p.__contains__("Project5"):
         import time
         
         # --- AWS SESSION SETUP ---
-        def get_aws_session():
-            with open(r'D:\lw classes\lw_streamlit_pr\rootkey.csv', 'r') as file:
-                reader = csv.reader(file)
-                next(reader)  # skip header
-                keys = next(reader)
+        def get_aws_session(aid,akey):
+        #     with open(r'D:\lw classes\lw_streamlit_pr\rootkey.csv', 'r') as file:
+        #         reader = csv.reader(file)
+        #         next(reader)  # skip header
+        #         keys = next(reader)
             return boto3.Session(
-                aws_access_key_id=keys[0],
-                aws_secret_access_key=keys[1],
+                aws_access_key_id=aid,
+                aws_secret_access_key=akey,
             )
         
         # --- INSTANCE MANAGEMENT ---
@@ -1463,8 +1477,10 @@ elif p.__contains__("Project5"):
         # --- STREAMLIT UI ---
         st.set_page_config(page_title="AWS EC2 Controller", layout="centered")
         st.title("🚀 AWS EC2 Instance Controller")
-        
-        session = get_aws_session()
+
+        aid = st.text_input("Enter Aws Session Id")
+        akey = st.text_input("Enter Aws Session Key")
+        session = get_aws_session(aid=aid, akey=akey)
         instance_id = st.session_state.get("instance_id", None)
         
         col1, col2 = st.columns(2)
