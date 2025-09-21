@@ -1,1 +1,14 @@
+requests
+beautifulsoup4
+pandas
+numpy
+seaborn
+matplotlib
+Pillow
+psutil
+pywhatkit
+twilio
+googlesearch-python
+scikit-learn
+streamlit
 gradio
