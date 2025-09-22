@@ -10,7 +10,6 @@ from PIL import Image, ImageDraw, ImageFont
 import io
 import datetime
 import urllib.parse
-import pywhatkit
 from twilio.rest import Client
 from googlesearch import search
 import requests
@@ -78,6 +77,7 @@ def send_email(to, subject, body):
 
 # 3. Schedule WhatsApp message using pywhatkit
 def send_whatsapp(number, message, delay_sec):
+    import pywhatkit
     future_time = datetime.datetime.now() + datetime.timedelta(seconds=int(delay_sec))
     hour, minute = future_time.hour, future_time.minute
     try:
