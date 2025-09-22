@@ -12,3 +12,4 @@ googlesearch-python
 scikit-learn
 streamlit
 gradio
+boto3
