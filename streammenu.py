@@ -738,7 +738,7 @@ elif p.__contains__("Project2"):
     st.title("🚀 Cloud Automation using Python")
     app_mode = st.sidebar.radio("Choose your function:",
                                   ("Boto3 Code ","linkedin"))
-    if app_mode.__contains__("Automation Function"):
+    if app_mode.__contains__("Boto3 Code"):
      pipeline_code = """import json
     import boto3
     import logging
