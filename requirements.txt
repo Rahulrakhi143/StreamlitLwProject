@@ -19,4 +19,6 @@ markdown-it-py==2.2.0
 mdit-py-plugins==0.3.3
 pygments==2.19.1
 rich==13.7.1
-
+pyaudio
+speechrecognition
+sounddevice
