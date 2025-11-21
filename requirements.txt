@@ -22,3 +22,4 @@ rich==13.7.1
 pyaudio
 speechrecognition
 sounddevice
+gradio
