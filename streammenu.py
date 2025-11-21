@@ -3,7 +3,6 @@ import os
 import subprocess
 
 import streamlit as st
-import gradio as gt
 import streamlit as st
 import psutil
 from PIL import Image, ImageDraw, ImageFont
