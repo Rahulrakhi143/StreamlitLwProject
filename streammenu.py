@@ -1417,24 +1417,12 @@ elif p.__contains__("Project5"):
             st.info("Please upload a .txt transcript file to start.")
     
     elif r.__contains__("Fulstack"):
-        
-        
-        import http.server
-        import socketserver
-        import webbrowser
-        import os
-        
-        PORT = 8000
-        
-        # Change working directory to the directory containing index.html
-        os.chdir(os.path.dirname(os.path.abspath("D:\lw classes\FinalProjects\projectLw\lw\index.html")))
-        
-        Handler = http.server.SimpleHTTPRequestHandler
-        
-        with socketserver.TCPServer(("", PORT), Handler) as httpd:
-            print(f"Serving at http://localhost:{PORT}")
-            webbrowser.open(f"http://localhost:{PORT}/index.html")
-            httpd.serve_forever()
+        import streamlit as st
+        # Load and display HTML file
+        with open("index.html", "r", encoding="utf-8") as f:
+            html_code = f.read()
+        st.components.v1.html(html_code, height=800, scrolling=True)
+
         
     
     
