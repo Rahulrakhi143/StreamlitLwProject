@@ -23,3 +23,5 @@ pyaudio
 speechrecognition
 sounddevice
 gradio
+google
+google-generativeai
