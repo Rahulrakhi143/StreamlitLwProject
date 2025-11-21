@@ -1418,10 +1418,17 @@ elif p.__contains__("Project5"):
     elif r.__contains__("Fulstack"):
         import streamlit as st
         # Load and display HTML file
-        with open("index.html", "r", encoding="utf-8") as f:
-            html_code = f.read()
-        st.components.v1.html(html_code, height=800, scrolling=True)
+        with open("index.html", "r", encoding="utf-8") as file:
+             html_code = file.read()
+        with open("style.css", "r", encoding="utf-8") as file:
+             css_code = "<style>" + file.read() + "</style>"
 
+        # Load JS
+        with open("script.js", "r", encoding="utf-8") as file:
+             js_code = "<script>" + file.read() + "</script>"
+
+        # Display the webpage
+        st.components.v1.html(css_code + html_code + js_code, height=900, scrolling=True)
         
     
     
